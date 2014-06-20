@@ -29,13 +29,7 @@ jindo.m.bindPageshow(function(e) {
 	console.log(e);
 });
 
-// detailList Show
-// function detailListShow() {
-// pagesHistory.push("pages/pushList.html");
-// $("#page-container").load("pages/pushDetail.html", function() {
-//
-// });
-// }
+
 
 // ul list click function..
 $('.scl_cnt').click(function(e) {
