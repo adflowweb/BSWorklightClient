@@ -1,0 +1,421 @@
+<link rel="stylesheet" href="font-awesome-4.1.0/css/font-awesome.css">
+
+<style type="text/css" media="all">
+.menubtn.right {
+	right: 8px
+}
+
+.rs-left,.rs-right {
+	display: none
+}
+
+.rs-main {
+	background-color: white;
+	box-shadow: 0 0 20px rgba(0, 0, 0, .6); /* 안쪽 그림자 크기, 색상 수정 */
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, .6) /* 안쪽 그림자 크기, 색상 수정 */
+}
+
+.rs-main .rs-title {
+	background: white
+}
+
+.rs-title {
+	position: relative;
+	width: 100%;
+	padding: 10px 0;
+	text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis
+}
+
+/*Reveal Side Css  end !!!!!!!!!!!!!!!!!!*/
+
+/*scroll list Css start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+#scrollWrapper {
+	position: absolute;
+	z-index: 1;
+	top: 45px;
+	bottom: 48px;
+	left: 0;
+	width: 100%;
+	background: white;
+	overflow: auto;
+}
+
+#scroller {
+	position: absolute;
+	z-index: 1;
+	/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	width: 100%;
+	padding: 0;
+}
+
+#scroller ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	text-align: left;
+}
+
+#scroller li {
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid white;
+	background-color: white;
+	font-size: 14px;
+}
+
+.scl_o {
+	height: 57px;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 5px;
+}
+
+.scl_lw {
+	margin: .36em 0 1em
+}
+
+i {
+	color: deepskyblue;
+}
+
+a,u {
+	text-decoration: none;
+}
+
+.rs-contentrow1 {
+	border-bottom: 1px solid #ccc;
+	margin: 10px;
+}
+
+.rs-contentrow2 {
+	border-bottom: 1px solid #ccc;
+	margin: 10px;
+}
+
+.rs-contentrow3 {
+	border-bottom: 1px solid #ccc;
+	margin: 10px;
+}
+
+.rs-contentrow1 span {
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: medium;
+	padding-left: 20px;
+}
+
+.rs-contentrow2 span {
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: medium;
+	padding-left: 20px;
+}
+
+.rs-contentrow3 span {
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: medium;
+	padding-left: 15px;
+}
+
+.listFooter {
+	clear: both;
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: x-large;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0;
+	height: 15%;
+	width: 100%;
+	margin-bottom: -7%;
+}
+
+.listFooter i {
+	text-align: left;
+}
+
+.bsMobileMessage {
+	margin-left: 25%;
+	position: absolute;
+	margin-top: 10%;
+}
+
+.bsMobileMessageI {
+	position: absolute;
+	left: 4%;
+	margin-top: 4%;
+}
+
+.scl_cnt {
+	display: block;
+	padding: 4%;
+	font-size: .93em;
+	line-height: 20px;
+	color: deepskyblue;
+	font-size: medium;
+}
+
+.scl_messageTitle {
+	
+}
+
+.scl_messageContet {
+	color: darkblue;
+	font-size: x-small;
+}
+
+.scl_date {
+	font-size: x-small;
+	color: darkblue; float : right; padding-right : 5%;
+	margin-top: 1%;
+	float: right;
+	padding-right: 5%;
+}
+
+.scl_tmb {
+	float: right;
+	clear: both;
+	margin-top: 8%;
+}
+</style>
+
+
+
+<div class="rs-body">
+	<div class="rs-left">
+		<!-- header -->
+		<div class="rs-title" position="fixed">
+			<i class="fa fa-wrench fa-2x"></i>
+		</div>
+		<div class="rs-content">
+			<div class="rs-contentrow1">
+				<i class="fa fa-user fa-2x"></i>
+					<span>User info</span>
+			</div>
+			<div class="rs-contentrow2">
+				<i class="fa fa-trash-o fa-2x"></i><span>Delete
+						all Messages</span>
+			</div>
+			<div class="rs-contentrow3">
+				<i class="fa fa-reply fa-2x"></i><span>Log out</span>
+			</div>
+		</div>
+		<div class="rs-footer rs-title"></div>
+	</div>
+	<div class="rs-main">
+		<div class="rs-title">
+			<i class="fa fa-envelope fa-2x"></i>
+		</div>
+		<div id="scrollWrapper">
+			<div id="scroller">
+				<ul id="thelist">
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+					<li class="scl_o">
+						<p class="scl_tmb">
+							<a href="#" onclick="javascript:pushListDelete();"><i
+								class="fa fa-trash-o fa-2x"></i></a>
+						</p>
+						<p class="scl_cnt">
+							<span class="scl_messageTitle">교육 장소 공지</span><br> <span
+								class="scl_messageContet">서울시 강남구 도곡동 에이디 도곡</span> <span
+								class="scl_date">2014/10/20</span>
+						</p>
+
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="listFooter">
+			<span class="bsMobileMessage">BS Mobile Message</span><span
+				class="bsMobileMessageI" onclick="oRevealSidebarUI.toggleSlide()"><i
+				class="fa fa-cog fa-2x"></i></span>
+		</div>
+	</div>
+	<div class="rs-right">
+		<div class="rs-title" position="fixed"></div>
+		<div class="rs-content"></div>
+		<div class="rs-footer rs-title"></div>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/pages/pushList.js">
+	
+ </script> 
+
+

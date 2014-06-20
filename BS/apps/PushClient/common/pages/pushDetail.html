@@ -1,0 +1,128 @@
+<style type="text/css">
+
+/*@code title="CSS"*/
+/* Page 영역 CSS */
+
+
+
+.jmc-page {
+	background: white; /* 전체 페이지의 배경색 */
+	border: 0;
+	width: 100%;
+	display: none;
+}
+
+/* Header 영역 CSS */
+.jmc-header {
+	background-color: white; /* 헤더 영역의 배경색 */
+	color: deepskyblue; /* 헤터 영역의 폰트색 */
+	height: auto; /* 헤터 영역의 높이 */
+	width: 100%;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	outline: 0 !important;
+}
+
+/* Footer 영역 CSS */
+.jmc-footer {
+	background-color: white; /* 풋터 영역의 배경색 */
+	color: deepskyblue; /* 풋터 영역의 폰트색 */
+	height: auto; /* 풋터 영역의 높이 */
+	width: 100%;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	outline: 0 !important;
+	margin-left: -5%;
+}
+
+/* Content 영역 CSS */
+.jmc-content {
+	clear: both;
+	width: 100%;
+	display: none;
+}
+
+/* Title 영역 CSS */
+.jmc-title {
+	margin: 0 5%; /* 타이틀 마진 */
+	width: 90%; /* 타이틀 너비 */
+	padding: 5px 0; /* 타이틀 패딩 */
+	height: 40%; /* 타이틀 높이 */
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: x-large;
+}
+
+.jmc-footer {
+	font: -webkit-mini-control;
+	color: deepskyblue;
+	font-size: x-large;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0;
+	height: 15%;
+	width: 100%;
+	margin-bottom: -7%;
+}
+
+.jmc-footer i {
+	text-align: left;
+}
+
+.bsMobileMessage {
+	margin-left: 30%;
+	position: absolute;
+	margin-top: 8%;
+}
+
+.bsMobileMessageI {
+	position: absolute;
+	left: 8%;
+	margin-top: 2%;
+}
+/*code@*/
+</style>
+
+
+
+
+<!-- Demo 영역 -->
+<!--@code title="HTML"-->
+<div class="jmc-page">
+	<!-- 헤더 영역 시작 -->
+	<div class="jmc-header" position="fixed">
+
+		<div class="jmc-title">
+			<i class="fa fa-envelope-o fa-2x"></i>
+		</div>
+
+	</div>
+	<!-- // 헤더 영역 끝 -->
+
+	<!-- 컨텐츠 영역 시작 -->
+	<div class="jmc-content"
+		style="background-image: url('http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif');">
+		<p>교육 공지 안내 장소 : 서울시 강남구 도곡동 에이디플로우 건물 6층 시간 : 내일 인원 : 32명 참석 여부
+			답변 바람 비용 : 10만원</p>
+	</div>
+
+
+	<!-- 풋터 영역 시작 -->
+	<div class="jmc-footer">
+		<span class="bsMobileMessage">BS Mobile Message</span><span
+			class="bsMobileMessageI" onclick="javascript:backButton();"> <i
+			class="fa fa-arrow-circle-left fa-2x"></i></span>
+	</div>
+	<!-- //풋터 영역 끝 -->
+</div>
+
+<script type="text/javascript" src="js/pages/pushDetail.js"></script>
+
+
+
+
