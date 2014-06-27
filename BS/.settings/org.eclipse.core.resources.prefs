@@ -1,4 +1,4 @@
-#Fri Jun 20 13:40:36 KST 2014
+#Fri Jun 20 18:09:00 KST 2014
 PushClient.ipad.native=1475155033
 base.iphone=1475155033
 base.android=4186851560
@@ -17,5 +17,5 @@ fipshttp.ipad=1204642243
 wl_compatible_version=
 PushClient.android.native=4186851560
 base.ipad=1475155033
-analytics.android=2408201680
 analytics.iphone=3086137238
+analytics.android=2408201680

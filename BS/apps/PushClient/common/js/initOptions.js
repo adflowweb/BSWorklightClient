@@ -65,26 +65,85 @@ var wlInitOptions = {
 // busyOptions: {text: "Loading..."}
 };
 
-var tokenKey = "ch";
 
-var pageWidth;
+//현재 날자 구하기 
+function nowDateResult(){
+	var nowDate = new Date();
+	var year = "" + nowDate.getFullYear();
+	 console.log(year);
+	var  month = "" + (nowDate.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+	 console.log(month);
+	var  day = "" + nowDate.getDate(); if (day.length == 1) { day = "0" + day; }
+	 console.log(day);
+	var  hour = "" + nowDate.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+	 console.log(hour);
+	var  minute = "" + nowDate.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+	 console.log(minute);
+	var  second = "" + nowDate.getSeconds(); if (second.length == 1) { second = "0" + second; }
+	  console.log(second);
+	var dateNowResult=year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	console.log('현재 날짜 구하기 결과');
+	console.log(dateNowResult); 
 
-var pageHeight;
+	return dateNowResult;
+}
+//현재 날자 yyyy-mm-dd hh:mm:ss
+var nowDataResult=nowDateResult();
+console.log('현재 날짜 구하기 yyyy-mm-dd hh:mm:ss');
+console.log(nowDataResult);
 
 
-
+//busyindicator!!
+window.busy = new WL.BusyIndicator();
+//pageHistory!!
 var pagesHistory = [];
-if (!tokenKey) {
-	$('#page-container').load("pages/pushList.html", function() {
-		// pagesHistory.push("pages/pushList.html");
-		console.log('in pageContainer..');
+
+//currentUserCheck
+var currentLoginID;
+var currentTokenID;
+
+document.addEventListener("deviceready", loginCheck, false);
+
+function loginCheck() {
+	var db = window.sqlitePlugin.openDatabase({
+		name : "PushDB"
 	});
-} else {
-	$('#page-container').load("pages/pushLogin.html", function() {
-		// pagesHistory.push("pages/pushLogin.html");
-		console.log('in pageContainer..');
-	
+	db.transaction(function(tx) {
+		tx.executeSql("select * from user where currentuser=1;", [], function(tx, res) {
+			console.log('유저정보 셀렉트');
+			console.log(res.rows.length);
+			console.log('유저정보 셀렉트 끝');
+			var currentUserCheck;
+			if(res.rows.length==1){
+				currentUserCheck= "CurrentUser";
+				currentLoginID= res.rows.item(0).userid;
+				currentTokenID= res.rows.item(0).tokenid;
+			}else{
+				currentUserCheck="notCurrentUser";
+			}
+			//user Info check
+			console.log("커런트유저 시작");
+			console.log(currentUserCheck);
+			console.log("커런트유저 끝");
+			
+			if (currentUserCheck=="CurrentUser") {
+			
+				$('#page-container').load("pages/pushList.html",function() {
+					console.log('푸쉬 리스트로 이동');
+					document.addEventListener("deviceready", loginPushListSelect, false);
+						});
+			} else {
+				console.log("커런트유저가 존재하지 않음!");
+				$('#page-container').load("pages/pushLogin.html", function() {
+					//임시 코드
+					console.log('로그인 페이지로 이동');
+
+				});
+			}
+
+		});
 	});
+
 }
 
 if (window.addEventListener) {
@@ -111,17 +170,155 @@ else if (window.attachEvent)
 else
 	window.onload = pushListJSAtOnload;
 
+function b64_to_utf8(str) {
+	return decodeURIComponent(escape(window.atob(str)));
+}
 
 
-var is_keyboard = false;
-var is_landscape = false;
-var initial_screen_size = window.innerHeight;
+WL.App.overrideBackButton(wlbackFunc);
+function wlbackFunc() {
+	console.log('인잇 옵션 페이지 히스토리 사이즈!!1');
+	console.log(pagesHistory.length);
+	console.log('인잇 옵션 페이지 히스토리 사이즈!!1');
+	if (pagesHistory.length == 0) {
 
-/* Android */
-window.addEventListener("resize", function() {
-    is_keyboard = (window.innerHeight < initial_screen_size);
-    is_landscape = (screen.height < screen.width);
+		if (confirm("앱 을 종료 하시겠습니까?") == true) {
+			WL.App.close();
+		} else {
+			return false;
+		}
+	} else {
+		$("#page-container").load(pagesHistory.pop(), function() {
 
-    updateViews();
-}, false);
+			document.addEventListener("deviceready", nativeBack, false);
+		});
+
+	}
+
+}
+
+//loginPushListSelect!!
+function loginPushListSelect(){
+	var db = window.sqlitePlugin.openDatabase({
+		name : "PushDB"
+	});
+	db.transaction(function(tx) {
+		tx.executeSql("select * from message where type=0 order by id desc;",[],
+					function(tx, res) {
+						var selectLength = res.rows.length;
+						var htmlTagli="";
+						//메세지가 없을때 						
+						if(selectLength==0){
+							htmlTagli=htmlTagli.concat("<br/><br/><br/><p style='text-align:center;color:#1172b6;'>수신된 메세지가 없습니다.</p>");
+							$(".ul_pushList").html(htmlTagli);
+						//수신된 메세지가 있을때
+						}else{
+										
+						for (var i = 0; i < selectLength; i++) {
+								var contentResult = res.rows.item(i).content;
+								var notiID = res.rows.item(i).id;
+								var receivedate=res.rows.item(i).receivedate;
+								console.log('메세지수신날짜');
+								console.log(receivedate);
+								console.log('메세지수신날짜');
+								var subReceive=receivedate.substring(0,10);
+								var subnowDate=nowDataResult.substring(0, 10);
+								if(subReceive==subnowDate){
+									console.log('메세지 수신과 현재 날짜가 같아 ');
+									receivedate=receivedate.substring(11,receivedate.length);
+									console.log('시간날짜 초를 보여줌');
+								}else{
+									console.log('메세지 수신과 현재 날짜가 달라 ');
+									receivedate=receivedate.substring(0,10);
+									console.log('년월날 보여줌');
+								}
+								console.log("노티피케이션 아이디");
+								console.log(notiID);
+								console.log("노티피케이션 아이디 끝");
+								contentResult = JSON.parse(contentResult);
+								console.log(contentResult.notification.ticker);
+								console.log(contentResult.notification.contentText);
+								var contentText=contentResult.notification.contentText;
+								 if(contentText.length>20){
+								     	contentText=contentText.substring(0, 18);
+									    contentText=contentText.concat('...');
+								  }
+						
+								htmlTagli=htmlTagli.concat('<li class="scl_o"><p class="scl_tmb"><br /> <a href="#" onclick="javascript:pushListDelete('+notiID+');"><i class="fa fa-trash-o fa-2x"></i></a></p><a a href="#" onclick="javascript:pushLishClick('+notiID+');"><p class="scl_cnt"><span class="scl_messageTitle">'
+										+ contentResult.notification.contentTitle
+										+ '</span><br> <span class="scl_textContent">'
+										+ contentText
+										+ '</span> <span class="scl_date" id="'+notiID+'">'+receivedate+'</span></p></a></li>');
+										                    }    
+						$(".ul_pushList").html(htmlTagli);
+						oScroll.refresh();
+						console.log('메세지 리스트 셀렉트 받아오기끝');
+						}
+						
+
+								});
+
+			});
+	
+	
+}
+//backButton
+function nativeBack(){
+	var db = window.sqlitePlugin.openDatabase({name : "PushDB"});
+	db.transaction(function(tx) {
+		 tx.executeSql("select * from message where type=0 order by id desc;",[],
+						function(tx, res) {
+							var selectLength = res.rows.length;
+							var htmlTagli="";
+							//메세지가 없을때 
+							if(selectLength==0){
+							   htmlTagli=htmlTagli.concat("<br/><br/><br/><p style='text-align:center;color:#1172b6;'>수신된 메세지가 없습니다.</p>");
+								$(".ul_pushList").html(htmlTagli);
+							//수신된 메세지가 있을때
+								}else{
+														
+								for (var i = 0; i < selectLength; i++) {
+										var contentResult = res.rows.item(i).content;
+										var notiID = res.rows.item(i).id;
+										var receivedate=res.rows.item(i).receivedate;
+										console.log('메세지수신날짜');
+										console.log(receivedate);
+										console.log('메세지수신날짜');
+										var subReceive=receivedate.substring(0,10);
+										var subnowDate=nowDataResult.substring(0, 10);
+										if(subReceive==subnowDate){
+											console.log('메세지 수신과 현재 날짜가 같아 ');
+											receivedate=receivedate.substring(11,receivedate.length);
+											console.log('시간날짜 초를 보여줌');
+										}else{
+											console.log('메세지 수신과 현재 날짜가 달라 ');
+											receivedate=receivedate.substring(0,10);
+											console.log('년월날 보여줌');
+										}
+										console.log("노티피케이션 아이디");
+										console.log(notiID);
+										console.log("노티피케이션 아이디 끝");
+										contentResult = JSON.parse(contentResult);
+										console.log(contentResult.notification.ticker);
+										console.log(contentResult.notification.contentText);
+									    var contentText=contentResult.notification.contentText;
+										  if(contentText.length>20){
+										      contentText=contentText.substring(0, 18);
+											  contentText=contentText.concat('...');
+										  }
+										htmlTagli=htmlTagli.concat('<li class="scl_o"><p class="scl_tmb"><br /> <a href="#" onclick="javascript:pushListDelete('+notiID+');"><i class="fa fa-trash-o fa-2x"></i></a></p><a a href="#" onclick="javascript:pushLishClick('+notiID+');"><p class="scl_cnt"><span class="scl_messageTitle">'
+												+ contentResult.notification.contentTitle
+												+ '</span><br> <span class="scl_textContent">'
+												+ contentText
+												+ '</span> <span class="scl_date" id="'+notiID+'">'+receivedate+'</span></p></a></li>');
+								                    }    
+								$(".ul_pushList").html(htmlTagli);
+								oScroll.refresh();
+								console.log('메세지 리스트 셀렉트 받아오기끝');
+								}		
+							});
+					});
+}
+
+
 
