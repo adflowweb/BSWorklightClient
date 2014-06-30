@@ -67,7 +67,7 @@ function loginFunction() {
 
 //nowLoginInfoSelect
 
-function nowLoginInfoSelect(loginId){
+function nowLoginInfoSelect(loginId,loginPass,tokenID){
 	console.log('sql lite에  유저정보가 있는지 검색  시작!!');
 	console.log(loginId);
 	var db = window.sqlitePlugin.openDatabase({
@@ -78,28 +78,27 @@ function nowLoginInfoSelect(loginId){
 				function(tx, res) {
 					console.log("로그인 아이디로 검색 start");
 					var userSelectResult=res.rows.length;
-					console.log(userSelectResult);
-					console.log(JSON.stringify(res.rows.item(0)));
-					var resultUserid =res.rows.item(0).userid;
-					currentTokenID=res.rows.item(0).tokenid;
-					console.log("로그인 아이디로 검색 end");
-					if(resultUserid==loginId){
+					
+					if(userSelectResult==1){
 						console.log("해당아이디의 유저가 존재함");
 						currentLoginID=loginId;
-					
 						//this user update currentUsercode !
 						document.addEventListener("deviceready", currentUserUpdate(loginId), false);
 //						$('#page-container').load("pages/pushList.html", function() {
 //							console.log("푸시 리스트로 이동 !!메세지 리스트 셀렉트 시작!!");
 //							
 //						});
-						
 					}else{
 						console.log("sql lite에 해당아이디의 유저가 no!!");
 						document.addEventListener("deviceready", loginInfoInsert(loginId,loginPass,tokenID), false);
-						
-						
 					}
+					
+//					console.log(userSelectResult);
+//					console.log(JSON.stringify(res.rows.item(0)));
+//					var resultUserid =res.rows.item(0).userid;
+//					currentTokenID=res.rows.item(0).tokenid;
+//					console.log("로그인 아이디로 검색 end");
+				
 				});
 
 		});
